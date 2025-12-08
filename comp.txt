@@ -1,0 +1,235 @@
+### 📋 MASTER PROMPT – CODE COMPARISON (WEATHER STATION BACKEND)
+
+**Task**
+Critically compare **Code_A** (version previously proposed by the AI) with **Code_B** (user’s current version provided at the end of the prompt) and produce a **final optimized version of the analyzed module**, ensuring full alignment with the architecture of the **weather station** project:
+
+* ESP32 → MQTT (Mosquitto) → `mqtt_client.py` → `influx_client.py` → InfluxDB 3 Core → PyQt6 GUI (`ui/main_windown.py`)
+* Runs in container / devcontainer, with `requirements.txt` and environment-based configuration.
+
+The analysis should consider complete **Python modules** (`.py`), including:
+
+* `mqtt_client.py` (signatures, callbacks, JSON parsing, broker connection)
+* `influx_client.py` (InfluxDB 3 client, writes and queries)
+* `main.py` (orchestration, wiring between MQTT, Influx, and GUI)
+* Optional helper modules (`config.py`, data models, etc.), when provided.
+
+---
+
+### Inputs
+
+* **Code_A**: AI proposal (Python module(s), or relevant excerpts).
+* **Code_B**: user’s current code.
+* **Context**: which module is being evaluated:
+
+  * `mqtt_client.py`,
+  * `influx_client.py`,
+  * `main.py`,
+  * configuration module,
+  * data model (e.g., `WeatherSample`) or other backend component.
+* **Relevant specifications of the weather station project** (treat as reference requirements):
+
+  * Backend in **Python 3.10+**, with:
+
+    * `paho-mqtt` for the MQTT client.
+    * Official or appropriate client for **InfluxDB 3 Core**.
+    * **PyQt6** in `ui/main_windown.py` (future or existing integration).
+  * `mqtt_client.py` must:
+
+    * Connect to the Mosquitto broker configured under `config/mosquitto`.
+    * Subscribe to defined topics (e.g., `weather/#`).
+    * Read **JSON** payloads sent by the ESP32.
+    * Validate and normalize data (timestamp, units, types).
+    * Wrap each sample into a clear structure (e.g., `WeatherSample`) and forward it to the rest of the system (Influx / GUI).
+  * `influx_client.py` must:
+
+    * Manage connection to InfluxDB 3 Core (host, port, token, org, database/bucket).
+    * Write measurements consistently (measurement name, tags, fields).
+    * Expose common queries for the GUI (last N samples, time window, simple aggregations).
+  * `main.py` must:
+
+    * Load configuration (env vars or `config` module).
+    * Instantiate `InfluxClient` and `MQTTClient`.
+    * Wire callbacks so MQTT messages are persisted in InfluxDB.
+    * Prepare (or integrate) the PyQt6 GUI event loop in a way that respects Qt’s event loop.
+  * **Minimal and modular implementation**:
+
+    * Clear separation of responsibilities (communication, persistence, orchestration).
+    * Use of **type hints**, **docstrings**, and **logging** instead of `print()` for logs.
+    * No unnecessary “magic”: avoid excessive global state, hidden side effects, and overengineering.
+  * Configuration via **environment variables** or a dedicated module:
+
+    * E.g. `MQTT_HOST`, `MQTT_PORT`, `MQTT_USERNAME`, `MQTT_PASSWORD`,
+      `INFLUX_HOST`, `INFLUX_PORT`, `INFLUX_TOKEN`, `INFLUX_ORG`, `INFLUX_DATABASE`.
+
+---
+
+### Objective
+
+Produce a **final, high-quality version** of the code that is correct, modular, and coherent with the weather station architecture, minimizing redundancy, fixing spec violations, and ensuring:
+
+* robust MQTT communication (reconnect, callbacks, error handling);
+* consistent, queryable storage in InfluxDB 3;
+* clear organization between modules (`mqtt_client.py`, `influx_client.py`, `main.py`, etc.);
+* configurability via environment / config, with no hardcoded secrets;
+* a solid foundation for PyQt6 GUI integration;
+* clear, readable, and maintainable code.
+
+---
+
+### Comparison Criteria
+
+Evaluate **Code_A** and **Code_B** according to:
+
+1. **Adherence to the project architecture**
+
+   * Correct data flow: MQTT → parsing → domain object → InfluxDB → GUI.
+   * Appropriate use of callbacks, events, or queues to decouple modules.
+   * Alignment with container / devcontainer usage (no machine-specific hardcoded paths).
+
+2. **Technical correctness**
+
+   * Coherent function signatures (types, parameters, return values).
+   * Proper usage of **type hints** and `dataclasses` (when applicable).
+   * Exception handling (MQTT/Influx connections, JSON parsing, timeouts).
+   * Resource management: connections opened/closed correctly, reconnection strategies, etc.
+
+3. **Modularity and organization**
+
+   * Proper separation between modules (`mqtt_client.py`, `influx_client.py`, `main.py`).
+   * No circular dependencies or unnecessary coupling.
+   * Clear class and function structure (well-defined responsibilities).
+
+4. **Consistency between modules**
+
+   * `MQTTClient` API compatible with what `main.py` expects.
+   * `InfluxClient` API compatible with `main.py` and, later, with the GUI.
+   * Data model (`WeatherSample` or similar) consistent across the codebase.
+
+5. **Locality, efficiency, and robustness**
+
+   * Efficient and clear JSON parsing.
+   * Reasonable write/query patterns for Influx (no unnecessary overhead).
+   * Proper logging usage (levels, informative messages) for debugging and operation.
+
+6. **Conformance to Python best practices**
+
+   * PEP 8, clear names for variables and functions.
+   * Avoiding unnecessary global state, hidden side effects, and dead code.
+   * Test-friendly structure where possible (functions / classes easy to test).
+
+7. **Style and minimalism**
+
+   * No methods beyond what is needed for the defined data flow.
+   * Avoid complex abstractions that don’t add value to the current project.
+
+---
+
+### Required Output (Standard Structure)
+
+**1. Key differences (A vs B)**
+Clearly list, in short bullets:
+
+* what **Code_A** implements that **Code_B** does not;
+* what **Code_B** does better than **Code_A**;
+* structural differences (classes vs functions, module organization, use of dataclasses);
+* responsibility differences (who opens connections, who formats Influx points, who validates JSON);
+* differences in architectural alignment (MQTT → Influx → GUI).
+
+---
+
+**2. Strengths**
+
+**2.1) Code_A:** objective bullets, e.g.:
+
+* “good separation between parsing and database writing”
+* “consistent use of type hints”
+* “automatic MQTT reconnection implemented”, etc.
+
+**2.2) Code_B:** objective bullets, e.g.:
+
+* “better adherence to project variable names”
+* “integration with GUI already wired”, etc.
+
+---
+
+**3. Weaknesses**
+
+**3.1) Code_A:** objective bullets.
+**3.2) Code_B:** objective bullets.
+
+Focus on:
+
+* bug risks;
+* architectural or best-practice violations;
+* unnecessary coupling;
+* missing error handling;
+* missing logging, etc.
+
+---
+
+**4. Recommended actions**
+
+Each bullet must **start with a verb**, for example:
+
+* “keep the `MQTTClient` class structure from A”
+* “remove loose print statements and replace with logging”
+* “fix JSON parsing to validate required fields”
+* “condense connection logic into a single MQTT setup method”
+* “expand Influx client to support time-window queries”
+* “standardize field names (`temperature_c`, `humidity_pct`, etc.)”
+* “align `WeatherSample` format between MQTT and Influx layers”
+* “extract configuration into environment variables”
+* “adjust encapsulation to avoid global variables”.
+
+Short, objective sentences, **one per line**.
+
+---
+
+**5. Suggested final version of the code**
+
+**5.1) Final mode selection (one line)**
+Indicate:
+
+* “Only A”, or
+* “Only B”, or
+* “Combination A+B”
+
+and justify in **one line** (e.g., “Combination A+B, keeping A’s modular structure and B’s already-tested config flow”).
+
+**5.2) Final Consolidated Code**
+Provide the complete code for the relevant module(s), ready to paste:
+
+* standardized naming;
+* minimalism (only what is needed for the MQTT → Influx → GUI flow);
+* compatibility with other project modules;
+* consistent use of type hints, docstrings, and logging;
+* clear separation of responsibilities;
+* explicit dependency on configuration (env vars or `config` module);
+* essential comments only (for important design decisions, not obvious behavior).
+
+---
+
+**6. Traceability notes**
+
+List:
+
+* Which decisions are based on which parts of the **weather station architecture** (e.g., need to parse ESP32 JSON, data flow into InfluxDB, GUI consumption).
+* Which choices are driven by Python best practices (PEP 8, logging, type hints).
+* Whenever a piece of information is missing (e.g., exact JSON shape from the ESP32, MQTT topic names, Influx schema), explicitly mark: **“reference needed”**.
+
+---
+
+**7. Size optimization**
+
+* Estimate whether the final code increases or decreases line count compared to A and B.
+* Mark which parts are **condensable** (can be simplified) without loss of functionality or clarity.
+* Indicate where it is worth splitting into helper functions for readability.
+
+---
+
+**8. Operation rules**
+
+* Evaluate **only the provided code**, do not rewrite the entire project.
+* Maintain compatibility with previously discussed steps of the weather station backend.
+* When there is ambiguity in style (for example: class vs free functions), offer **two short options** and choose one, with a one-line justification (e.g., “class improves future reuse, so option 1 is preferred”).
+* Wait for my confirmation before applying the same pattern to other modules (`mqtt_client.py`, `influx_client.py`, `main.py`, etc.).
