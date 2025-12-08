@@ -3,7 +3,12 @@ Configuration management for the weather station application.
 Loads settings from environment variables with sensible defaults.
 """
 import os
-from typing import List
+import json
+import logging
+from typing import Optional
+from pathlib import Path
+
+logger = logging.getLogger(__name__)
 
 
 class MQTTConfig:
@@ -33,18 +38,94 @@ class MQTTConfig:
         )
 
 
+class InfluxDBConfig:
+    """InfluxDB 3 Core connection configuration."""
+    
+    def __init__(self):
+        self.host: str = os.getenv("INFLUX_HOST", "influxdb3-core-pse")
+        self.port: int = int(os.getenv("INFLUX_PORT", "8181"))
+        
+        # Database and organization
+        self.database: str = os.getenv("INFLUX_DATABASE", "weather_station")
+        self.org: str = os.getenv("INFLUX_ORG", "pse")
+        
+        # Measurement (table) name
+        self.measurement: str = os.getenv("INFLUX_MEASUREMENT", "weather_data")
+        
+        # Token handling: try env var first, then fall back to token.json
+        self.token: str = self._load_token()
+        
+        # Connection URL
+        self.url: str = f"http://{self.host}:{self.port}"
+    
+    def _load_token(self) -> str:
+        """
+        Load InfluxDB token from environment variable or token.json file.
+        
+        Returns:
+            The authentication token
+            
+        Raises:
+            ValueError: If token cannot be found
+        """
+        # Try environment variable first
+        token = os.getenv("INFLUX_TOKEN")
+        if token:
+            logger.info("Using InfluxDB token from environment variable")
+            return token
+        
+        # Fall back to token.json file
+        token_file = Path("config/influxdb3/token.json")
+        
+        if token_file.exists():
+            try:
+                with open(token_file, 'r') as f:
+                    token_data = json.load(f)
+                    token = token_data.get("token")
+                    
+                    if token:
+                        logger.info(f"Loaded InfluxDB token from {token_file}")
+                        return token
+                    else:
+                        raise ValueError("Token field not found in token.json")
+                        
+            except json.JSONDecodeError as e:
+                raise ValueError(f"Invalid JSON in {token_file}: {e}")
+            except Exception as e:
+                raise ValueError(f"Failed to read token file: {e}")
+        
+        # No token found
+        raise ValueError(
+            "InfluxDB token not found. Set INFLUX_TOKEN env var or "
+            "create config/influxdb3/token.json with token field"
+        )
+    
+    def __repr__(self) -> str:
+        """String representation (hides token)."""
+        token_preview = f"{self.token[:10]}..." if self.token else "None"
+        return (
+            f"InfluxDBConfig(url='{self.url}', database='{self.database}', "
+            f"org='{self.org}', measurement='{self.measurement}', "
+            f"token='{token_preview}')"
+        )
+
+
 class AppConfig:
     """Application-wide configuration."""
     
     def __init__(self):
         self.mqtt = MQTTConfig()
+        self.influxdb = InfluxDBConfig()
         self.log_level: str = os.getenv("LOG_LEVEL", "INFO")
         
         # Timezone for timestamps
         self.timezone: str = os.getenv("TZ", "America/Sao_Paulo")
     
     def __repr__(self) -> str:
-        return f"AppConfig(mqtt={self.mqtt}, log_level='{self.log_level}')"
+        return (
+            f"AppConfig(mqtt={self.mqtt}, influxdb={self.influxdb}, "
+            f"log_level='{self.log_level}')"
+        )
 
 
 # Global config instance (loaded on import)

@@ -11,4 +11,3 @@ pandas
 
 # ---- InfluxDB 3 client ----
 influxdb3-python
-
