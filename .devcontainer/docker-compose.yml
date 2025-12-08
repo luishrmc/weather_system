@@ -1,0 +1,53 @@
+services:
+  app:
+    container_name: pse
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      # Mount your local workspace into the container.
+      - ..:/home/pse/workspace:cached
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    ports:
+      - "8000:8000"
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp=unconfined
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_QPA_PLATFORM=xcb
+    # Keep the container alive for VS Code to attach
+    command: sleep infinity
+  # The InfluxDB 3 core service
+  # The Eclipse Mosquitto MQTT broker service
+  mosquitto:
+    image: eclipse-mosquitto:2.0
+    container_name: mosquitto
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+    volumes:
+      - ../config/mosquitto/config:/mosquitto/config
+      - ../config/mosquitto/data:/mosquitto/data
+      - ../config/mosquitto/log:/mosquitto/log
+  influxdb3:
+    image: influxdb:3-core
+    container_name: influxdb3-pse
+    user: "${UID:-1000}:${GID:-1000}"
+    # restart: on-failure:10
+    ports:
+      - "8181:8181"
+    volumes:
+      - ../config/influxdb3/core/data:/var/lib/influxdb3/data
+      - ../config/influxdb3/core/plugins:/var/lib/influxdb3/plugins
+    command:
+          - influxdb3
+          - serve
+          - --node-id=node0
+          - --object-store=file
+          - --data-dir=/var/lib/influxdb3/data
+          - --plugin-dir=/var/lib/influxdb3/plugins
+          - --http-bind=0.0.0.0:8181
+    environment:
+      LOG_FILTER: debug

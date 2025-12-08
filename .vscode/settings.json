@@ -1,0 +1,75 @@
+{
+    // --- Python environment management ---
+    "python.defaultInterpreterPath": "/home/pse/workspace/.venv/bin/python",
+    "python.terminal.activateEnvironment": true, // auto-activate .venv in terminal
+    "python.analysis.extraPaths": [
+        "./app",
+        "./ui"
+    ], // better imports from app/ and ui/
+    // --- IntelliSense & type checking (Pylance) ---
+    "python.analysis.typeCheckingMode": "basic", // or "strict" if you want more warnings
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.completeFunctionParens": true,
+    // --- Formatting & linting (pick a combo) ---
+    // If you like Black + isort (most common combo):
+    "python.formatting.provider": "black",
+    "editor.formatOnSave": true,
+    "python.sortImports.args": [
+        "--profile",
+        "black"
+    ],
+    // Optional: use Ruff or Flake8 for linting instead of default
+    // (you'll need `ruff` or `flake8` in requirements.txt)
+    // "python.linting.enabled": true,
+    // "python.linting.flake8Enabled": true,
+    // "python.linting.mypyEnabled": true,
+    // --- Testing (for when you start adding tests) ---
+    "python.testing.pytestEnabled": true,
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    // --- Debugging (useful with debugpy & tasks) ---
+    "debug.openDebug": "openOnSessionStart",
+    "debug.internalConsoleOptions": "neverOpen",
+    "python.debug.justMyCode": true,
+    // --- Qt / PyQt development ---
+    // Helps the "Qt for Python" extension and Pylance
+    "qtForPython.uic.args": [
+        "--from-imports"
+    ],
+    "qtForPython.designer.defaultTranslationLanguage": "en",
+    "qtForPython.preferPysideOverPyqt": false, // you're using PyQt
+    // --- Editor ergonomics (Python indentation, etc.) ---
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    // "editor.rulers": [
+    //     88
+    // ], // PEP8-ish visual guide
+    "editor.wordWrap": "on",
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.python",
+        "editor.formatOnType": true
+    },
+    // --- Git & Git Graph ---
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "git.enableSmartCommit": true,
+    "git-graph.defaultColumnVisibility": {
+        "Date": true,
+        "Author": true,
+        "Commit": true,
+        "Message": true
+    },
+    // --- Copilot / Copilot Chat ---
+    "github.copilot.inlineSuggest.enable": true,
+    "github.copilot.editor.enableAutoCompletions": true,
+    "github.copilot.chat.context.followEditor": true,
+    // --- Terminal / general in devcontainer ---
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/.mypy_cache": true,
+        ".venv": true
+    }
+}

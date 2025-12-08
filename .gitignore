@@ -1,0 +1,44 @@
+# -------------------------
+# Python
+# -------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Local settings (optional)
+*.sqlite3
+
+# -------------------------
+# Devcontainer / Docker
+# -------------------------
+# Docker build artifacts
+*.tar
+*.img
+
+# Ignore local env files
+.env
+.env.*
+
+# -------------------------
+# InfluxDB 3 & Mosquitto data
+# -------------------------
+# InfluxDB core node data
+config/influxdb3/core/data/
+config/influxdb3/explorer/db/
+
+# Mosquitto persisted data & logs
+config/mosquitto/data/
+config/mosquitto/log/
+
+# -------------------------
+# Misc
+# -------------------------
+.DS_Store
+Thumbs.db

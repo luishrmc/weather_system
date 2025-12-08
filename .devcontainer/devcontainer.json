@@ -1,0 +1,40 @@
+{
+    "name": "Weather System PSE",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/home/pse/workspace",
+    "remoteUser": "pse",
+    "forwardPorts": [
+        8000
+    ],
+    "initializeCommand": "xhost +local:docker",
+    "postCreateCommand": "python3 -m venv .venv && ./.venv/bin/pip install -r requirements.txt",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                // --- Python stack ---
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "ms-python.debugpy",
+                "visualstudioexptteam.vscodeintellicode",
+                "kevinrose.vsc-python-indent",
+                "seanwu.vscode-qt-for-python",
+                // --- AI & Git tools ---
+                "GitHub.copilot",
+                "GitHub.copilot-chat",
+                "mhutchie.git-graph"
+            ],
+            "settings": {
+                // --- Python ---
+                "python.defaultInterpreterPath": "/usr/bin/python3",
+                "python.analysis.typeCheckingMode": "basic",
+                "python.formatting.provider": "black",
+                "python.linting.enabled": true,
+                "python.linting.flake8Enabled": true,
+                "python.testing.pytestEnabled": true,
+                // Terminal
+                "terminal.integrated.defaultProfile.linux": "bash"
+            }
+        }
+    }
+}
