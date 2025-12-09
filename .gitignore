@@ -32,6 +32,7 @@ venv/
 # InfluxDB core node data
 config/influxdb3/core/data/
 config/influxdb3/explorer/db/
+config/grafana/data/
 
 # Mosquitto persisted data & logs
 config/mosquitto/data/

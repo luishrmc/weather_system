@@ -1,0 +1,21 @@
+apiVersion: 1
+
+datasources:
+  - name: InfluxDB3-Weather
+    type: influxdata-flightsql-datasource
+    uid: weather-data-source
+    access: proxy
+    url: influxdb3-core-pse:8181
+    isDefault: true
+    editable: true
+    jsonData:
+      host: influxdb3-core-pse:8181
+      secure: false
+      # The plugin maps these keys to gRPC headers
+      metadata:
+        # InfluxDB 3 Core explicitly checks for the 'database' header
+        database: weather_station
+        # Add bucket-name too just for compatibility
+        bucket-name: weather_station
+        # The Authorization header hack
+        authorization: "Bearer apiv3_1-LwHmqG5knWnuR873Akkz_PIHj0CveraP5yBG-jtGoMFtJnmMM6VKVddYwWbMCNRW5AENN14XDcPFtFk3Enuw"
