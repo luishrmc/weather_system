@@ -158,8 +158,8 @@ class SimulationConfig:
     
     # GPS settings
     gps_enabled: bool = True
-    gps_latitude: float = -23.550520
-    gps_longitude: float = -46.633308
+    gps_latitude: float = -19.869494 
+    gps_longitude: float = -43.964028
     gps_altitude: float = 760.0
     gps_noise: float = 0.00001  # Small GPS drift
     gps_satellites_min: int = 6
