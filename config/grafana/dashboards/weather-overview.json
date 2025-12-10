@@ -22,7 +22,7 @@
             "type": "stat",
             "datasource": {
                 "type": "influxdata-flightsql-datasource",
-                "uid": "df6jfde329534b"
+                "uid": "df6mlkoanl91cc"
             },
             "gridPos": {
                 "x": 0,
@@ -153,7 +153,7 @@
             "type": "stat",
             "datasource": {
                 "type": "influxdata-flightsql-datasource",
-                "uid": "df6jfde329534b"
+                "uid": "df6mlkoanl91cc"
             },
             "gridPos": {
                 "x": 5,
@@ -215,7 +215,7 @@
             "type": "stat",
             "datasource": {
                 "type": "influxdata-flightsql-datasource",
-                "uid": "df6jfde329534b"
+                "uid": "df6mlkoanl91cc"
             },
             "gridPos": {
                 "x": 9,
@@ -285,7 +285,7 @@
             "type": "stat",
             "datasource": {
                 "type": "influxdata-flightsql-datasource",
-                "uid": "df6jfde329534b"
+                "uid": "df6mlkoanl91cc"
             },
             "gridPos": {
                 "x": 13,
@@ -405,7 +405,7 @@
             "type": "gauge",
             "datasource": {
                 "type": "influxdata-flightsql-datasource",
-                "uid": "df6jfde329534b"
+                "uid": "df6mlkoanl91cc"
             },
             "gridPos": {
                 "x": 19,
@@ -467,7 +467,7 @@
             "type": "timeseries",
             "datasource": {
                 "type": "influxdata-flightsql-datasource",
-                "uid": "df6jfde329534b"
+                "uid": "df6mlkoanl91cc"
             },
             "gridPos": {
                 "x": 0,
@@ -560,7 +560,7 @@
             "type": "timeseries",
             "datasource": {
                 "type": "influxdata-flightsql-datasource",
-                "uid": "df6jfde329534b"
+                "uid": "df6mlkoanl91cc"
             },
             "gridPos": {
                 "x": 14,
@@ -626,7 +626,7 @@
             "type": "timeseries",
             "datasource": {
                 "type": "influxdata-flightsql-datasource",
-                "uid": "df6jfde329534b"
+                "uid": "df6mlkoanl91cc"
             },
             "gridPos": {
                 "x": 0,
@@ -708,7 +708,7 @@
             "type": "timeseries",
             "datasource": {
                 "type": "influxdata-flightsql-datasource",
-                "uid": "df6jfde329534b"
+                "uid": "df6mlkoanl91cc"
             },
             "gridPos": {
                 "x": 12,
@@ -780,7 +780,7 @@
             "type": "geomap",
             "datasource": {
                 "type": "influxdata-flightsql-datasource",
-                "uid": "df6jfde329534b"
+                "uid": "df6mlkoanl91cc"
             },
             "gridPos": {
                 "x": 0,
@@ -856,7 +856,7 @@
             "type": "table",
             "datasource": {
                 "type": "influxdata-flightsql-datasource",
-                "uid": "df6jfde329534b"
+                "uid": "df6mlkoanl91cc"
             },
             "gridPos": {
                 "x": 16,

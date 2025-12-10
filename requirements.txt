@@ -1,6 +1,3 @@
-# ---- Core GUI ----
-PyQt6
-
 # ---- MQTT Client ----
 paho-mqtt
 

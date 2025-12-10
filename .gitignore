@@ -6,6 +6,8 @@ __pycache__/
 *.pyo
 *.pyd
 *.log
+*.sqlite
+*.pytest_cache/
 
 # Virtual environments
 .venv/
@@ -31,6 +33,8 @@ venv/
 # -------------------------
 # InfluxDB core node data
 config/influxdb3/core/data/
+config/influxdb3/core/plugins/
+config/influxdb3/explorer/config/
 config/influxdb3/explorer/db/
 config/grafana/data/
 

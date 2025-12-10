@@ -18,4 +18,4 @@ datasources:
         # Add bucket-name too just for compatibility
         bucket-name: weather_station
         # The Authorization header hack
-        authorization: "Bearer apiv3_1-LwHmqG5knWnuR873Akkz_PIHj0CveraP5yBG-jtGoMFtJnmMM6VKVddYwWbMCNRW5AENN14XDcPFtFk3Enuw"
+        authorization: "Bearer apiv3_dZGICInAqq54a05bfVRQQ7aCAbOIhIUsH-fqUXUdzCi5utuDTEQ3X975JKJSwrYaJfo01XN4mbbWhUZwfEem4A"
